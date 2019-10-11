@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta http-equiv="refresh" content="3;url=/" />
+    <title>yourITcity{{ if not .Found }} - Oups{{ end }}</title>
+    <style>
+    body { background: antiquewhite; padding-top: 30px;} 
+    .wrapper {
+        background: #fff;
+        padding: 30px;
+        margin: 0 auto 15px;
+        border-radius: 6px;
+        width: 500px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title"><img src="https://storage.gra5.cloud.ovh.net/v1/AUTH_b49a48a77ecf40ff9e51a30fdf28633c/yic/yourITcity%201%20transparent%20300%20x%20324.png" alt="yourITcity" /></div>
+    {{ if .Found }}
+        <h1>Congratulation</h1>
+        <p>You just validate {{ with .Name }}<strong>{{ . }}</strong>{{ end }} {{ with .Type }}<strong>{{ . }}</strong>{{ end }} application token.</p>
+    {{ else }}
+        <h1>Oups</h1>
+        <p>This link doesn't exist or has expire.</p>
+        <p>You have to <strong>signup</strong> or <strong>login</strong> again.</p>
+    {{ end }}
+        <p>Redirecting to home page...</p>
+        <a href="/">Go back to home</a>
+    </div>
+</body>
+</html>
