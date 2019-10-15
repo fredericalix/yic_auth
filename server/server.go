@@ -33,7 +33,7 @@ import (
 	"github.com/goware/emailx"
 	"github.com/spf13/viper"
 
-	"github.com/fredericalix/yic_auth"
+	auth "github.com/fredericalix/yic_auth"
 
 	_ "net/http/pprof"
 
@@ -73,8 +73,6 @@ func main() {
 		log.Printf("cannot read config file: %v\nUse env instead\n", err)
 	}
 
-
-
 	h := &handler{
 		store:   NewPostgreSQL(viper.GetString("POSTGRESQL_URI")),
 		url:     strings.TrimRight(viper.GetString("EXTERNAL_URL"), "/"),
@@ -83,9 +81,9 @@ func main() {
 		expValidation: viper.GetDuration("EXPIRATION_VALIDATION"),
 		expAppToken:   viper.GetDuration("EXPIRATION_APP_TOKEN"),
 		emailSrv:      newEmailService(viper.GetString("RABBITMQ_URI")),
-		tokenTmpl:     template.Must(template.ParseFiles("./template/token_validation.html")),
-		loginTmpl:     template.Must(template.ParseFiles("./template/login_email.html")),
-		signupTmpl:    template.Must(template.ParseFiles("./template/signup_email.html")),
+		tokenTmpl:     template.Must(template.ParseFiles("./static/token_validation.html")),
+		loginTmpl:     template.Must(template.ParseFiles("./static/login_email.html")),
+		signupTmpl:    template.Must(template.ParseFiles("./static/signup_email.html")),
 	}
 	h.rabbit, err = newTokenNotificationService(h.emailSrv.conn, h.store)
 	if err != nil {
