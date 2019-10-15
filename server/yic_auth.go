@@ -99,6 +99,11 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
+	// Echo ping status
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Ping Ok\n")
+	})
+
 	a := e.Group("/auth")
 	a.GET("/debug/pprof/*", echo.WrapHandler(http.DefaultServeMux), middleware.Rewrite(map[string]string{"/auth/*": "/$1"}))
 
