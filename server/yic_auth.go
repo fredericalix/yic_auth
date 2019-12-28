@@ -98,12 +98,15 @@ func main() {
 	// Set endpoint handlers
 	e := echo.New()
 	e.Use(middleware.Logger())
-
+	e.Use(middleware.Recover())
 	// Echo ping status
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Ping Ok\n")
 	})
-
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 	a := e.Group("/auth")
 	a.GET("/debug/pprof/*", echo.WrapHandler(http.DefaultServeMux), middleware.Rewrite(map[string]string{"/auth/*": "/$1"}))
 
